@@ -73,7 +73,7 @@ passport.use(Strategy);
 app.all('/login', loginSSO());
 function loginSSO() {
 	console.log("in login ------------- ");
-	passport.authenticate('openidconnect', {});
+	return passport.authenticate('openidconnect', {});
 }
 
 function ensureAuthenticated(req, res, next) {
