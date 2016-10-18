@@ -81,7 +81,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/home', function(req, res){
-	res.render('home');
+	res.render('home.html');
 });
 	
 app.get('/auth/sso/callback',function(req,res,next) {
