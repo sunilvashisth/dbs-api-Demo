@@ -82,7 +82,8 @@ function ensureAuthenticated(req, res, next) {
 	    req.session.originalUrl = req.originalUrl;
 		console.log("req.originalUrl ----- "+req.originalUrl);
 		console.log("req.session.originalUrl ----- "+req.session.originalUrl);
-		res.redirect('/login');
+		console.log("invoking login ------------- ");
+		return passport.authenticate('openidconnect', {});
 	} else {
 		console.log("!req.isAuthenticated() ----- false ");
 		return next();
