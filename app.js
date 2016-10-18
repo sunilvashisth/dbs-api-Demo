@@ -70,7 +70,7 @@ var Strategy = new OpenIDConnectStrategy({
 });
 
 passport.use(Strategy);
-app.get('/login', loginSSO());
+app.all('/login', loginSSO());
 function loginSSO() {
 	console.log("in login ------------- ");
 	passport.authenticate('openidconnect', {});
