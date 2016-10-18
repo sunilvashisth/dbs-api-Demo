@@ -70,12 +70,17 @@ var Strategy = new OpenIDConnectStrategy({
 });
 
 passport.use(Strategy);
-app.get('/login', passport.authenticate('openidconnect', {}));
+app.get('/login', passport.authenticate('openidconnect', {
+	console.log(" in /login ---------------------");
+
+}));
 
 function ensureAuthenticated(req, res, next) {
 	if(!req.isAuthenticated()) {
 		console.log("!req.isAuthenticated() ----- true ");
 	    req.session.originalUrl = req.originalUrl;
+		console.log("req.originalUrl ----- "+req.originalUrl);
+		console.log("req.session.originalUrl ----- "+req.session.originalUrl);
 		res.redirect('/login');
 	} else {
 		console.log("!req.isAuthenticated() ----- false ");
