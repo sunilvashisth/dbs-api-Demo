@@ -38,6 +38,7 @@ passport.deserializeUser(function(obj, done) {
    done(null, obj);
 });
 
+
 // find config object for the SSO services from VCAP_SERVICES through cfenv/appEnv
 var ssoConfig = appEnv.getService('DBS-API_SSO');
 var client_id = ssoConfig.credentials.clientId;
