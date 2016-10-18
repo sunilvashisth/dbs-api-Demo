@@ -80,6 +80,10 @@ function ensureAuthenticated(req, res, next) {
 	}
 }
 
+app.get('/home', function(req, res){
+	res.render('home');
+}
+	
 app.get('/auth/sso/callback',function(req,res,next) {
 	    var redirect_url = req.session.originalUrl;
             passport.authenticate('openidconnect',{
