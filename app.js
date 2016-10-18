@@ -70,10 +70,7 @@ var Strategy = new OpenIDConnectStrategy({
 });
 
 passport.use(Strategy);
-app.get('/login', passport.authenticate('openidconnect', {
-	console.log(" in /login ---------------------");
-
-}));
+app.get('/login', passport.authenticate('openidconnect', {}));
 
 function ensureAuthenticated(req, res, next) {
 	if(!req.isAuthenticated()) {
