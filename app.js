@@ -74,14 +74,19 @@ app.get('/login', passport.authenticate('openidconnect', {}));
 
 function ensureAuthenticated(req, res, next) {
 	if(!req.isAuthenticated()) {
-	          	req.session.originalUrl = req.originalUrl;
+		console.log("!req.isAuthenticated() ----- true ");
+	    req.session.originalUrl = req.originalUrl;
 		res.redirect('/login');
 	} else {
+		console.log("!req.isAuthenticated() ----- false ");
 		return next();
 	}
 }
 
 app.get('/auth/sso/callback',function(req,res,next) {
+
+	console.log(" in /auth/sso/callback ");
+	console.log(" redirect_url "+req.session.originalUrl);
 	    var redirect_url = req.session.originalUrl;
             passport.authenticate('openidconnect',{
                  successRedirect: redirect_url,
@@ -91,6 +96,7 @@ app.get('/auth/sso/callback',function(req,res,next) {
 
 
 app.get('/hello', ensureAuthenticated, function(req, res) {
+			console.log(" in Hello ");
              res.send('Hello, '+ req.user['id'] + '!'); });
 
 app.get('/failure', function(req, res) {
