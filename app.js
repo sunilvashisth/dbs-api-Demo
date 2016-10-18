@@ -38,9 +38,8 @@ passport.deserializeUser(function(obj, done) {
    done(null, obj);
 });
 
-
 // find config object for the SSO services from VCAP_SERVICES through cfenv/appEnv
-var ssoConfig = appEnv.getService('DBS-API_SSO');
+var ssoConfig = appEnv.getService(/Single Sign On.*/)
 var client_id = ssoConfig.credentials.clientId;
 var client_secret = ssoConfig.credentials.secret;
 var authorization_url = ssoConfig.credentials.authorizationEndpointUrl;
@@ -69,21 +68,17 @@ var Strategy = new OpenIDConnectStrategy({
 });
 
 passport.use(Strategy);
-app.get('/', passport.authenticate('openidconnect', {}));
+app.get('/login', passport.authenticate('openidconnect', {}));
 
 function ensureAuthenticated(req, res, next) {
 	if(!req.isAuthenticated()) {
 	          	req.session.originalUrl = req.originalUrl;
-		res.redirect('/');
+		res.redirect('/login');
 	} else {
 		return next();
 	}
 }
 
-app.get('/home', function(req, res){
-	res.render('home');
-});
-	
 app.get('/auth/sso/callback',function(req,res,next) {
 	    var redirect_url = req.session.originalUrl;
             passport.authenticate('openidconnect',{
@@ -101,9 +96,6 @@ app.get('/failure', function(req, res) {
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
-
-app.set('view engine', 'ejs'); // use ejs as the default template rendering engine 
-app.set('views', __dirname + '/views'); 
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, function() {
