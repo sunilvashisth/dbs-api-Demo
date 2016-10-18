@@ -81,7 +81,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/home', function(req, res){
-	res.render('home.html');
+	res.render('home');
 });
 	
 app.get('/auth/sso/callback',function(req,res,next) {
@@ -101,6 +101,9 @@ app.get('/failure', function(req, res) {
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
+
+app.set('view engine', 'ejs'); // use ejs as the default template rendering engine 
+app.set('views', __dirname + '/views'); 
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, function() {
