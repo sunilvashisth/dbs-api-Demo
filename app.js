@@ -38,8 +38,10 @@ passport.deserializeUser(function(obj, done) {
    done(null, obj);
 });
 
+var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
+var ssoConfig = services.SingleSignOn[0];
 // find config object for the SSO services from VCAP_SERVICES through cfenv/appEnv
-var ssoConfig = appEnv.getService(/Single Sign On.*/)
+//var ssoConfig = appEnv.getService(/Single Sign On.*/)
 var client_id = ssoConfig.credentials.clientId;
 var client_secret = ssoConfig.credentials.secret;
 var authorization_url = ssoConfig.credentials.authorizationEndpointUrl;
