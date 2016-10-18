@@ -98,7 +98,7 @@ app.get('/auth/sso/callback',function(req,res,next) {
         });
 
 
-app.get('/hello', ensureAuthenticated, function(req, res) {
+app.get('/', ensureAuthenticated, function(req, res) {
 			console.log(" in Hello ");
              res.send('Hello, '+ req.user['id'] + '!'); });
 
